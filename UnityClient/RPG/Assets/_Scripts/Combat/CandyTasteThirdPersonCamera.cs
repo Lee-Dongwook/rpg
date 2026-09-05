@@ -1,25 +1,36 @@
 using UnityEngine;
 
-/// <summary>사탕맛 뒤쪽에서 적을 함께 바라보는 고정 3인칭 전투 카메라입니다.</summary>
+/// <summary>전장을 위에서 비스듬히 내려다보는 TFT식 아이소메트릭 전투 카메라입니다.</summary>
 [ExecuteAlways]
 public sealed class CandyTasteThirdPersonCamera : MonoBehaviour
 {
     [SerializeField] private Transform followTarget;
-    [SerializeField] private Vector3 cameraOffset = new(0f, 2.25f, -5.6f);
-    [SerializeField] private Vector3 lookOffset = new(0f, 1.15f, 2.4f);
+    [SerializeField] private Vector3 cameraOffset = new(0f, 6.5f, -7.3f);
+    [SerializeField] private Vector3 lookOffset = new(0f, .45f, .35f);
+    [SerializeField] private float damping = 8f;
 
     public void SetTarget(Transform value)
     {
         followTarget = value;
-        SnapToTarget();
+        SnapToTarget(instant: true);
     }
 
-    private void LateUpdate() => SnapToTarget();
+    public void SetFraming(Vector3 offset, Vector3 look)
+    {
+        cameraOffset = offset;
+        lookOffset = look;
+    }
 
-    private void SnapToTarget()
+    private void LateUpdate() => SnapToTarget(instant: !Application.isPlaying);
+
+    private void SnapToTarget(bool instant)
     {
         if (followTarget == null) return;
-        transform.position = followTarget.position + cameraOffset;
+
+        var desired = followTarget.position + cameraOffset;
+        transform.position = instant
+            ? desired
+            : Vector3.Lerp(transform.position, desired, 1f - Mathf.Exp(-damping * Time.deltaTime));
         transform.LookAt(followTarget.position + lookOffset);
     }
 }

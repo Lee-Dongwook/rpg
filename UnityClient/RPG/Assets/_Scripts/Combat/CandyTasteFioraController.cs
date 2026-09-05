@@ -3,7 +3,8 @@ using UnityEngine;
 
 /// <summary>
 /// Set 17 5코스트 피오라형 '사탕맛'의 전투 시연 컨트롤러입니다.
-/// 매 2회 공격의 급소 돌진과 70마나 시 6개 급소 난무를 시각화합니다.
+/// 매 2회 공격의 급소 돌진과 70마나 시 6개 급소 난무를 시각화하며,
+/// 타격/치유 연출은 Resources/AnimaSquad 의 이펙트 스프라이트를 사용합니다.
 /// </summary>
 public sealed class CandyTasteFioraController : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public sealed class CandyTasteFioraController : MonoBehaviour
 
     // 보드 크기(가로 5칸, 세로 5칸)에 맞춘 이동 가능 범위입니다.
     // 카메라가 캐릭터를 따라가더라도 전장 밖으로 벗어나지 않습니다.
-    [SerializeField] private Vector2 fieldHalfExtents = new(2.5f, 2.6f);
+    [SerializeField] private Vector2 fieldHalfExtents = new(2.3f, 2f);
 
     private Vector3 homePosition;
     private int attacks;
@@ -87,30 +88,33 @@ public sealed class CandyTasteFioraController : MonoBehaviour
             yield return null;
         }
         transform.position = destination;
-        SpawnRing(destination, new Color(1f, .31f, .67f), .36f, .16f);
+        SpawnStrike(destination, direction);
     }
 
     private IEnumerator HealingAura()
     {
-        var aura = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-        aura.name = "사탕맛 - 2칸 치유 오라";
-        aura.transform.position = homePosition + Vector3.down * .45f;
-        aura.transform.localScale = new Vector3(4f, .025f, 4f);
-        aura.GetComponent<Renderer>().material.color = new Color(.26f, .97f, .84f, .5f);
-        Destroy(aura.GetComponent<Collider>());
-        yield return new WaitForSeconds(5f);
-        Destroy(aura);
+        var aura = AnimaArt.GroundQuad(null, "사탕맛 - 2칸 치유 오라", AnimaArt.Texture("aura_ring"),
+                                       4f, AnimaArt.Blend.Additive);
+        aura.transform.position = homePosition + Vector3.up * .03f;
+        aura.AddComponent<AnimaFadeSprite>().Play(5f, 1.06f, billboard: false);
+        yield return new WaitForSeconds(5.1f);
     }
 
-    private static void SpawnRing(Vector3 position, Color color, float size, float lifetime)
+    /// <summary>급소를 찌른 순간의 참격과 타격 스파크를 띄웁니다.</summary>
+    private static void SpawnStrike(Vector3 position, Vector3 direction)
     {
-        var ring = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        ring.name = "급소 타격";
-        ring.transform.position = position + Vector3.up * .5f;
-        ring.transform.localScale = Vector3.one * size;
-        ring.GetComponent<Renderer>().material.color = color;
-        Destroy(ring.GetComponent<Collider>());
-        Destroy(ring, lifetime);
+        var center = position + Vector3.up * .95f - direction * .35f;
+
+        var slash = AnimaArt.Quad(null, "급소 참격", AnimaArt.Texture("slash_fx"), 1.5f,
+                                  AnimaArt.Blend.Additive);
+        slash.transform.position = center;
+        slash.transform.localRotation = Quaternion.Euler(0f, 0f, Random.Range(0f, 360f));
+        slash.AddComponent<AnimaFadeSprite>().Play(.2f, 1.5f, billboard: true);
+
+        var spark = AnimaArt.Quad(null, "타격 스파크", AnimaArt.Texture("hit_spark"), .8f,
+                                  AnimaArt.Blend.Additive);
+        spark.transform.position = center;
+        spark.AddComponent<AnimaFadeSprite>().Play(.16f, 1.9f, billboard: true);
     }
 
     public void SetTarget(Transform value) => target = value;
