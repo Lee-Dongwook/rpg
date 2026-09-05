@@ -1,5 +1,7 @@
 namespace GameShared.Packets
 {
+    using GameShared.Models;
+
     public enum CommandType
     {
         Move,
