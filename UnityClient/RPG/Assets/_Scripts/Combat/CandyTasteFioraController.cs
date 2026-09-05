@@ -21,6 +21,10 @@ public sealed class CandyTasteFioraController : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private float demoRepeatSeconds = 4.5f;
 
+    // 보드 크기(가로 5칸, 세로 5칸)에 맞춘 이동 가능 범위입니다.
+    // 카메라가 캐릭터를 따라가더라도 전장 밖으로 벗어나지 않습니다.
+    [SerializeField] private Vector2 fieldHalfExtents = new(2.5f, 2.6f);
+
     private Vector3 homePosition;
     private int attacks;
     private bool casting;
@@ -74,12 +78,12 @@ public sealed class CandyTasteFioraController : MonoBehaviour
     {
         if (target == null) yield break;
         var direction = Quaternion.Euler(0f, index * 60f, 0f) * Vector3.forward;
-        var destination = target.position + direction * 1.05f;
+        var destination = ClampToField(target.position + direction * 1.05f);
         var start = transform.position;
         const float duration = .12f;
         for (var time = 0f; time < duration; time += Time.deltaTime)
         {
-            transform.position = Vector3.Lerp(start, destination, time / duration);
+            transform.position = ClampToField(Vector3.Lerp(start, destination, time / duration));
             yield return null;
         }
         transform.position = destination;
@@ -110,4 +114,11 @@ public sealed class CandyTasteFioraController : MonoBehaviour
     }
 
     public void SetTarget(Transform value) => target = value;
+
+    private Vector3 ClampToField(Vector3 position)
+    {
+        position.x = Mathf.Clamp(position.x, -fieldHalfExtents.x, fieldHalfExtents.x);
+        position.z = Mathf.Clamp(position.z, -fieldHalfExtents.y, fieldHalfExtents.y);
+        return position;
+    }
 }

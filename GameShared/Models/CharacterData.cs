@@ -13,13 +13,12 @@ namespace GameShared.Models
         public int Armor { get; set; }
         public int MagicResist { get; set; }
         public int Range { get; set; }
-
         public CharacterData(string id, int maxHp, int attackPower)
         {
             Id = id;
             DisplayName = id;
             MaxHp = maxHp;
-            Hp = maxHp; 
+            Hp = maxHp;
             AttackPower = attackPower;
             Traits = System.Array.Empty<string>();
         }
