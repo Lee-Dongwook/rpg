@@ -23,7 +23,7 @@ public class GameClientManager : MonoBehaviour
         {
             client = new TcpClient();
             await client.ConnectAsync(ip, port);
-            isConncted = true;
+            isConnected = true;
             Debug.Log("[Client] 서버 연결 성공!");
 
             NetworkStream stream = client.GetStream();
@@ -66,7 +66,7 @@ public class GameClientManager : MonoBehaviour
         // 스킬 사용 신호라면 FioraEffectController를 호출하여 
         // 화려한 난무 VFX와 카메라 셰이크를 터뜨립니다!
     }
-    
+
     public async void SendCommand(string commandMessage)
     {
         if (!isConnected || writer == null) return;
