@@ -62,9 +62,11 @@ public class GameClientManager : MonoBehaviour
     {
         Debug.Log($"[Client] 패킷 수신: {json}");
 
-        // TODO: 여기서 패킷 종류를 분석(Deserialization)하고, 
-        // 스킬 사용 신호라면 FioraEffectController를 호출하여 
-        // 화려한 난무 VFX와 카메라 셰이크를 터뜨립니다!
+        // 서버의 스킬 신호가 오면 '사탕맛'의 난무 연출을 실행합니다.
+        if (json.Contains("UseSkill") || json.Contains("perfect-bladework"))
+        {
+            FindFirstObjectByType<CandyTasteFioraController>()?.ReceiveSkillSignal();
+        }
     }
 
     public async void SendCommand(string commandMessage)
