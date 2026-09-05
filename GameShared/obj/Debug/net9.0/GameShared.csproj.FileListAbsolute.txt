@@ -1,0 +1,12 @@
+/Users/dlehddnr0713/Desktop/rpg/GameShared/bin/Debug/net9.0/GameShared.deps.json
+/Users/dlehddnr0713/Desktop/rpg/GameShared/bin/Debug/net9.0/GameShared.dll
+/Users/dlehddnr0713/Desktop/rpg/GameShared/bin/Debug/net9.0/GameShared.pdb
+/Users/dlehddnr0713/Desktop/rpg/GameShared/obj/Debug/net9.0/GameShared.GeneratedMSBuildEditorConfig.editorconfig
+/Users/dlehddnr0713/Desktop/rpg/GameShared/obj/Debug/net9.0/GameShared.AssemblyInfoInputs.cache
+/Users/dlehddnr0713/Desktop/rpg/GameShared/obj/Debug/net9.0/GameShared.AssemblyInfo.cs
+/Users/dlehddnr0713/Desktop/rpg/GameShared/obj/Debug/net9.0/GameShared.csproj.CoreCompileInputs.cache
+/Users/dlehddnr0713/Desktop/rpg/GameShared/obj/Debug/net9.0/GameShared.sourcelink.json
+/Users/dlehddnr0713/Desktop/rpg/GameShared/obj/Debug/net9.0/GameShared.dll
+/Users/dlehddnr0713/Desktop/rpg/GameShared/obj/Debug/net9.0/refint/GameShared.dll
+/Users/dlehddnr0713/Desktop/rpg/GameShared/obj/Debug/net9.0/GameShared.pdb
+/Users/dlehddnr0713/Desktop/rpg/GameShared/obj/Debug/net9.0/ref/GameShared.dll
