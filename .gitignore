@@ -1,0 +1,32 @@
+# ==========================================
+# .NET / C# (GameShared, GameServer)
+# ==========================================
+bin/
+obj/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vs/
+
+# ==========================================
+# Unity (UnityClient)
+# ==========================================
+# 뼛속까지 임시 파일인 디렉토리들
+/[Uu]nityClient/[Ll]ibrary/
+/[Uu]nityClient/[Ll]ogs/
+/[Uu]nityClient/[Mm]emoryCaptures/
+/[Uu]nityClient/[Uu]serSettings/
+
+# 빌드 결과물 및 패키지 캐시
+/[Uu]nityClient/[Bb]uild/
+/[Uu]nityClient/[Bb]uilds/
+/[Uu]nityClient/[Aa]ssets/[Pp]ackages/
+/[Uu]nityClient/[Tt]emp/
+/[Uu]nityClient/[Oo]bj/
+/[Uu]nityClient/[Pp]ackages/cache/
+/[Uu]nityClient/[Pp]ackages/registries/
+
+# 맥 OS 메타 파일
+.DS_Store
+Thumbs.db
